@@ -1,0 +1,19 @@
+version: '3.7'
+services: 
+  database:
+    image: 'postgres'
+    container_name: pgDB
+    ports: 
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=docker
+    restart: always
+    volumes: 
+      - ../db-data:/var/lib/postgresql/data
+      - ./database/database.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ./database/database_test.sql:/docker-entrypoint-initdb.d/2-schema.sql
+
+    logging: 
+      options: 
+        max-size: '10m'
+        max-file: '3'
